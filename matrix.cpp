@@ -18,7 +18,8 @@ namespace Mtrx {
     void fill(Matrix *matrix) { //ToDo read file
         for (int i = 0; i < matrix->rows; ++i) {
             for (int j = 0; j < matrix->cols; ++j) {
-                matrix->matrix[i][j] = (i + 1) * 10 + j + 1;
+//                matrix->matrix[i][j] = i * matrix->cols + j + 1;
+                    std::cin >> matrix->matrix[i][j];
             }
         }
     }
@@ -45,11 +46,41 @@ namespace Mtrx {
         }
     }
 
-    void clear_col(Matrix *matrix, int row, int col) {
-        double factor = matrix->matrix[row][col], devider = matrix->matrix[row + 1][col];
-        multiply_row(matrix, row + 1, factor);
-        for (int i = 0; i < matrix->cols; ++i) {
-            matrix->matrix[row + 1][i] -= devider*factor;
+    void clear_col(Matrix *matrix, int row, int col, bool isDown) {
+        double factor = matrix->matrix[row][col];
+        if (factor == 0)
+            return;
+
+        if(isDown) {
+            for (int i = row + 1; i < matrix->rows; ++i) {
+                double devider = matrix->matrix[i][col];
+                multiply_row(matrix, i, factor);
+
+                for (int j = 0; j < matrix->cols; ++j) {
+                    matrix->matrix[i][j] -= devider * matrix->matrix[row][j];
+                }
+            }
+        } else {
+            for (int i = row - 1; i >= 0; --i) {
+                double devider = matrix->matrix[i][col];
+                multiply_row(matrix, i, factor);
+
+                for (int j = matrix->cols; j >= 0 ; --j) {
+                    matrix->matrix[i][j] -= devider * matrix->matrix[row][j];
+                }
+            }
+        }
+    }
+
+    void clear_diagonal(Matrix *matrix, bool isDown) {
+        if(isDown) {
+            for (int i = 0; i < std::min(matrix->cols, matrix->rows) - 1; ++i) {
+                clear_col(matrix, i, i, isDown);
+            }
+        } else {
+            for (int i = std::min(matrix->cols, matrix->rows) - 1; i > 0; --i) {
+                clear_col(matrix, i, i, isDown);
+            }
         }
     }
 }
