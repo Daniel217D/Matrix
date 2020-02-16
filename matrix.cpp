@@ -42,7 +42,6 @@ namespace Mtrx {
     void multiply_row(Matrix *matrix, int row, double num) {
         for (int i = 0; i < matrix->cols; ++i) {
             matrix->matrix[row][i] *= num;
-            std::cout << i;
         }
     }
 
