@@ -4,9 +4,9 @@
 #include "matrix.h"
 
 namespace Mtrx {
-    Matrix create() {
+    Matrix create(std::string path) {
         Matrix matrix{};
-        std::ifstream in("./input.txt");
+        std::ifstream in(path);
 
         if(!in.is_open()) {
             std::cout << "file isn't found";

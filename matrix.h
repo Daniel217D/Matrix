@@ -7,7 +7,7 @@ namespace Mtrx {
         int cols;
     };
 
-    Matrix create();
+    Matrix create(std::string path);
 
     void print(Matrix *matrix);
 

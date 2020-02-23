@@ -9,7 +9,7 @@ using namespace Mtrx;
 
 
 int main() {
-    Matrix matrix = create();
+    Matrix matrix = create("./input.txt");
     print(&matrix);
     clear_diagonal(&matrix, true);
     print(&matrix);
