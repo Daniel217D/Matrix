@@ -147,7 +147,7 @@ namespace Mtrx {
 
         for (int i = 0; i < matrix.cols; ++i) {
             if(matrix.matrix[i[i]] == 0) {
-                retrun false
+                return false
             }
             multiply_row(&inverse, i, 1 / matrix.matrix[i][i]);
         }
