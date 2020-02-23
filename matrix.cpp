@@ -144,7 +144,11 @@ namespace Mtrx {
         Matrix inverse = create_identity(matrix.rows, matrix.cols);
         clear_diagonal(&matrix, &inverse);
 
+
         for (int i = 0; i < matrix.cols; ++i) {
+            if(matrix.matrix[i[i]] == 0) {
+                retrun false
+            }
             multiply_row(&inverse, i, 1 / matrix.matrix[i][i]);
         }
 
