@@ -98,6 +98,7 @@ namespace Mtrx {
 
     void clear_col(Matrix *matrix, Matrix *inverse, int row, int col, bool isDown) {
         double factor = matrix->matrix[row][col];
+
         if (factor == 0)
             return;
 
@@ -131,7 +132,7 @@ namespace Mtrx {
             clear_col(matrix, inverse, i, i, true);
         }
         for (int i = std::min(matrix->cols, matrix->rows) - 1; i > 0; --i) {
-            clear_col(matrix, inverse,  i, i, false);
+            clear_col(matrix, inverse, i, i, false);
         }
     }
 
@@ -142,9 +143,11 @@ namespace Mtrx {
 
         Matrix inverse = create_identity(matrix.rows, matrix.cols);
         clear_diagonal(&matrix, &inverse);
+
         for (int i = 0; i < matrix.cols; ++i) {
-            multiply_row(&inverse, i, 1/matrix.matrix[i][i]);
+            multiply_row(&inverse, i, 1 / matrix.matrix[i][i]);
         }
+
         matrix = inverse;
         return true;
     }
