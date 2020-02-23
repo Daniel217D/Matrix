@@ -11,11 +11,10 @@ using namespace Mtrx;
 int main() {
     Matrix matrix = create("./input.txt");
     print(&matrix);
-    cout << check_square(&matrix) << "\n";
-    clear_diagonal(&matrix, true);
-    print(&matrix);
-    clear_diagonal(&matrix, false);
-    print(&matrix);
+
+    if(inverse_matrix(matrix)) {
+        print(&matrix);
+    };
 
     clear(&matrix);
 

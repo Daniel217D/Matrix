@@ -8,7 +8,7 @@ namespace Mtrx {
         Matrix matrix{};
         std::ifstream in(path);
 
-        if(!in.is_open()) {
+        if (!in.is_open()) {
             std::cout << "file isn't found";
             return matrix;
         }
@@ -16,8 +16,7 @@ namespace Mtrx {
         int temp, count_symbols = 0, count_space = 0;
         char symbol = ' ';
 
-        while (!in.eof())
-        {
+        while (!in.eof()) {
             in >> temp;
             count_symbols++;
         }
@@ -25,8 +24,7 @@ namespace Mtrx {
         in.seekg(0, std::ios::beg);
         in.clear();
 
-        while (!in.eof() && symbol != '\n')
-        {
+        while (!in.eof() && symbol != '\n') {
             in.get(symbol);
             if (symbol == ' ') count_space++;
         }
@@ -98,41 +96,56 @@ namespace Mtrx {
         }
     }
 
-    void clear_col(Matrix *matrix, int row, int col, bool isDown) {
+    void clear_col(Matrix *matrix, Matrix *inverse, int row, int col, bool isDown) {
         double factor = matrix->matrix[row][col];
         if (factor == 0)
             return;
 
-        if(isDown) {
+        if (isDown) {
             for (int i = row + 1; i < matrix->rows; ++i) {
                 double devider = matrix->matrix[i][col];
                 multiply_row(matrix, i, factor);
+                multiply_row(inverse, i, factor);
 
                 for (int j = 0; j < matrix->cols; ++j) {
                     matrix->matrix[i][j] -= devider * matrix->matrix[row][j];
+                    inverse->matrix[i][j] -= devider * inverse->matrix[row][j];
                 }
             }
         } else {
             for (int i = row - 1; i >= 0; --i) {
                 double devider = matrix->matrix[i][col];
                 multiply_row(matrix, i, factor);
+                multiply_row(inverse, i, factor);
 
-                for (int j = matrix->cols; j >= 0 ; --j) {
+                for (int j = matrix->cols; j >= 0; --j) {
                     matrix->matrix[i][j] -= devider * matrix->matrix[row][j];
+                    inverse->matrix[i][j] -= devider * inverse->matrix[row][j];
                 }
             }
         }
     }
 
-    void clear_diagonal(Matrix *matrix, bool isDown) {
-        if(isDown) {
-            for (int i = 0; i < std::min(matrix->cols, matrix->rows) - 1; ++i) {
-                clear_col(matrix, i, i, isDown);
-            }
-        } else {
-            for (int i = std::min(matrix->cols, matrix->rows) - 1; i > 0; --i) {
-                clear_col(matrix, i, i, isDown);
-            }
+    void clear_diagonal(Matrix *matrix, Matrix *inverse) {
+        for (int i = 0; i < std::min(matrix->cols, matrix->rows) - 1; ++i) {
+            clear_col(matrix, inverse, i, i, true);
         }
+        for (int i = std::min(matrix->cols, matrix->rows) - 1; i > 0; --i) {
+            clear_col(matrix, inverse,  i, i, false);
+        }
+    }
+
+    bool inverse_matrix(Matrix &matrix) {
+        if (!check_square(&matrix)) {
+            return false;
+        }
+
+        Matrix inverse = create_identity(matrix.rows, matrix.cols);
+        clear_diagonal(&matrix, &inverse);
+        for (int i = 0; i < matrix.cols; ++i) {
+            multiply_row(&inverse, i, 1/matrix.matrix[i][i]);
+        }
+        matrix = inverse;
+        return true;
     }
 }
