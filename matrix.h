@@ -23,6 +23,6 @@ namespace Mtrx {
 
     void clear_diagonal(Matrix *matrix, Matrix *inverse);
 
-    bool int inverse_matrix(Matrix &matrix);
+    bool inverse_matrix(Matrix &matrix);
 }
 #endif //CPP_MATRIX_H
