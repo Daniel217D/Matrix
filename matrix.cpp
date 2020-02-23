@@ -69,6 +69,10 @@ namespace Mtrx {
         delete[] matrix->matrix;
     }
 
+    bool check_square(Matrix *matrix) {
+        return matrix->rows == matrix->cols;
+    }
+
     void multiply_row(Matrix *matrix, int row, double num) {
         for (int i = 0; i < matrix->cols; ++i) {
             matrix->matrix[row][i] *= num;
