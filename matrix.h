@@ -9,6 +9,8 @@ namespace Mtrx {
 
     Matrix create(std::string path);
 
+    Matrix create(int rows, int cols);
+
     void print(Matrix *matrix);
 
     void clear(Matrix *matrix);

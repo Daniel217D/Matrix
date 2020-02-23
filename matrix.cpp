@@ -53,6 +53,17 @@ namespace Mtrx {
         return matrix;
     }
 
+    Matrix create(int rows, int cols) {
+        Matrix matrix{};
+        matrix.rows = rows;
+        matrix.cols = cols;
+        matrix.matrix = new double *[matrix.rows];
+
+        for (int i = 0; i < matrix.rows; ++i)
+            matrix.matrix[i] = new double[matrix.cols];
+
+        return matrix;
+    }
     void print(Matrix *matrix) {
         for (int i = 0; i < matrix->rows; ++i) {
             for (int j = 0; j < matrix->cols; ++j) {
