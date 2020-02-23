@@ -35,14 +35,9 @@ namespace Mtrx {
         in.clear();
 
         int cols = count_space + 1;//число столбцов на единицу больше числа пробелов
-        int rows = count_symbols / (cols);//число строк
+        int rows = count_symbols / cols;//число строк
 
-        matrix.rows = rows;
-        matrix.cols = cols;
-        matrix.matrix = new double *[matrix.rows];
-
-        for (int i = 0; i < matrix.rows; ++i)
-            matrix.matrix[i] = new double[matrix.cols];
+        matrix = create(rows, cols);
 
         for (int i = 0; i < matrix.rows; ++i) {
             for (int j = 0; j < matrix.cols; ++j) {
@@ -64,6 +59,19 @@ namespace Mtrx {
 
         return matrix;
     }
+
+    Matrix create_identity(int rows, int cols) {
+        Matrix matrix = create(rows, cols);
+
+        for (int i = 0; i < matrix.cols; ++i) {
+            for (int j = 0; j < matrix.rows; ++j) {
+                matrix.matrix[i][j] = i == j ? 1 : 0;
+            }
+        }
+
+        return matrix;
+    }
+
     void print(Matrix *matrix) {
         for (int i = 0; i < matrix->rows; ++i) {
             for (int j = 0; j < matrix->cols; ++j) {
