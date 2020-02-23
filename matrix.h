@@ -7,9 +7,7 @@ namespace Mtrx {
         int cols;
     };
 
-    Matrix create(int rows, int cols);
-
-    void fill(Matrix *matrix);
+    Matrix create();
 
     void print(Matrix *matrix);
 

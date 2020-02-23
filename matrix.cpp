@@ -1,9 +1,41 @@
 #include <iostream>
+#include <fstream>
+#include <iostream>
 #include "matrix.h"
 
 namespace Mtrx {
-    Matrix create(int rows, int cols) {
+    Matrix create() {
         Matrix matrix{};
+        std::ifstream in("./input.txt");
+
+        if(!in.is_open()) {
+            std::cout << "file isn't found";
+            return matrix;
+        }
+
+        int temp, count_symbols = 0, count_space = 0;
+        char symbol = ' ';
+
+        while (!in.eof())
+        {
+            in >> temp;
+            count_symbols++;
+        }
+
+        in.seekg(0, std::ios::beg);
+        in.clear();
+
+        while (!in.eof() && symbol != '\n')
+        {
+            in.get(symbol);
+            if (symbol == ' ') count_space++;
+        }
+
+        in.seekg(0, std::ios::beg);
+        in.clear();
+
+        int cols = count_space + 1;//число столбцов на единицу больше числа пробелов
+        int rows = count_symbols / (cols);//число строк
 
         matrix.rows = rows;
         matrix.cols = cols;
@@ -12,16 +44,13 @@ namespace Mtrx {
         for (int i = 0; i < matrix.rows; ++i)
             matrix.matrix[i] = new double[matrix.cols];
 
-        return matrix;
-    }
-
-    void fill(Matrix *matrix) { //ToDo read file
-        for (int i = 0; i < matrix->rows; ++i) {
-            for (int j = 0; j < matrix->cols; ++j) {
-//                matrix->matrix[i][j] = i * matrix->cols + j + 1;
-                    std::cin >> matrix->matrix[i][j];
+        for (int i = 0; i < matrix.rows; ++i) {
+            for (int j = 0; j < matrix.cols; ++j) {
+                in >> matrix.matrix[i][j];
             }
         }
+
+        return matrix;
     }
 
     void print(Matrix *matrix) {
