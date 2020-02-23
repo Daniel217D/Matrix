@@ -87,7 +87,7 @@ namespace Mtrx {
     }
 
     bool check_square(Matrix *matrix) {
-        return matrix->rows == matrix->cols;
+        return
     }
 
     void multiply_row(Matrix *matrix, int row, double num) {
@@ -136,9 +136,9 @@ namespace Mtrx {
         }
     }
 
-    bool inverse_matrix(Matrix &matrix) {
-        if (!check_square(&matrix)) {
-            return false;
+    int inverse_matrix(Matrix &matrix) {
+        if ( matrix.rows != matrix.cols) {
+            return 1;
         }
 
         Matrix inverse = create_identity(matrix.rows, matrix.cols);
@@ -147,12 +147,12 @@ namespace Mtrx {
 
         for (int i = 0; i < matrix.cols; ++i) {
             if(matrix.matrix[i[i]] == 0) {
-                return false
+                return 2;
             }
             multiply_row(&inverse, i, 1 / matrix.matrix[i][i]);
         }
 
         matrix = inverse;
-        return true;
+        return 0;
     }
 }
