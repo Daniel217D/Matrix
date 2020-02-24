@@ -1,6 +1,5 @@
 #include <iostream>
 #include "matrix.h"
-#include <fstream>
 
 using std::cout;
 using std::cin;
@@ -21,6 +20,7 @@ int main() {
             break;
         case 2:
             cout << "Matrix's determinant is null";
+            break;
     }
 
     clear(&matrix);
