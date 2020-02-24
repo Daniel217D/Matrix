@@ -13,6 +13,8 @@ namespace Mtrx {
 
     void print(Matrix *matrix);
 
+    void print(int status, Matrix *matrix);
+
     void clear(Matrix *matrix);
 
     void multiply_row(Matrix* matrix, int row, double num);

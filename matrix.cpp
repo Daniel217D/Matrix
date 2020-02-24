@@ -70,6 +70,20 @@ namespace Mtrx {
         return matrix;
     }
 
+    void print(int status, Matrix *matrix) {
+        switch (status) {
+            case 0:
+                print(matrix);
+                break;
+            case 1:
+                std::cout << "Matrix is not square";
+                break;
+            case 2:
+                std::cout << "Matrix's determinant is null";
+                break;
+        }
+    }
+
     void print(Matrix *matrix) {
         for (int i = 0; i < matrix->rows; ++i) {
             for (int j = 0; j < matrix->cols; ++j) {
