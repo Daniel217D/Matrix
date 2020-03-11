@@ -11,6 +11,8 @@ namespace Mtrx {
 
     Matrix create(int rows, int cols);
 
+    Matrix create_identity(int rows, int cols);
+
     void print(Matrix *matrix);
 
     void print(int status, Matrix *matrix);
@@ -23,6 +25,6 @@ namespace Mtrx {
 
     void clear_diagonal(Matrix *matrix, Matrix *inverse);
 
-    int inverse_matrix(Matrix &matrix);
+    int inverse_matrix(Matrix &matrix_original, Matrix &inverse);
 }
 #endif //CPP_MATRIX_H

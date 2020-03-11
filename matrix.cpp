@@ -76,10 +76,10 @@ namespace Mtrx {
                 print(matrix);
                 break;
             case 1:
-                std::cout << "Matrix is not square";
+                std::cout << "Matrix is not square \n";
                 break;
             case 2:
-                std::cout << "Matrix's determinant is null";
+                std::cout << "Matrix's determinant is null \n";
                 break;
         }
     }
@@ -98,6 +98,22 @@ namespace Mtrx {
         for (int i = 0; i < matrix->rows; ++i)
             delete[] matrix->matrix[i];
         delete[] matrix->matrix;
+    }
+
+    Matrix copy(Matrix *matrix) {
+        Matrix copy{};
+        copy.rows = matrix->rows;
+        copy.cols = matrix->cols;
+
+        copy.matrix = new double *[matrix->rows];
+
+        for (int i = 0; i < matrix->rows; ++i) {
+            copy.matrix[i] = new double [matrix->cols];
+            for (int j = 0; j < matrix->cols; ++j)
+                copy.matrix[i][j] = matrix->matrix[i][j];
+        }
+
+        return copy;
     }
 
     void multiply_row(Matrix *matrix, int row, double num) {
@@ -146,14 +162,16 @@ namespace Mtrx {
         }
     }
 
-    int inverse_matrix(Matrix &matrix) {
+    int inverse_matrix(Matrix &matrix_original, Matrix &inverse) {
+        Matrix matrix = copy(&matrix_original);
+
         if ( matrix.rows != matrix.cols) {
             return 1;
         }
 
-        Matrix inverse = create_identity(matrix.rows, matrix.cols);
+        inverse = create_identity(matrix.rows, matrix.cols);
         clear_diagonal(&matrix, &inverse);
-
+        print(&matrix);
 
         for (int i = 0; i < matrix.cols; ++i) {
             if(matrix.matrix[i][i] == 0) {
@@ -162,7 +180,7 @@ namespace Mtrx {
             multiply_row(&inverse, i, 1 / matrix.matrix[i][i]);
         }
 
-        matrix = inverse;
+//        matrix = inverse;
         return 0;
     }
 }
