@@ -171,7 +171,6 @@ namespace Mtrx {
 
         inverse = create_identity(matrix.rows, matrix.cols);
         clear_diagonal(&matrix, &inverse);
-        print(&matrix);
 
         for (int i = 0; i < matrix.cols; ++i) {
             if(matrix.matrix[i][i] == 0) {
@@ -180,7 +179,6 @@ namespace Mtrx {
             multiply_row(&inverse, i, 1 / matrix.matrix[i][i]);
         }
 
-//        matrix = inverse;
         return 0;
     }
 }
