@@ -15,20 +15,23 @@ int main() {
     print(inverse_matrix(matrix, inverse), &inverse);
     clear(&matrix);
     cout << "----------------------\n";
+
     matrix = create("./inputs/input_1.txt");
     print(&matrix);
     print(inverse_matrix(matrix, inverse), &inverse);
     clear(&matrix);
     cout << "----------------------\n";
+
     matrix = create("./inputs/input_2.txt");
     print(&matrix);
     print(inverse_matrix(matrix, inverse), &inverse);
     clear(&matrix);
     cout << "----------------------\n";
+
     matrix = create("./inputs/input_hard.txt");
     print(&matrix);
     print(inverse_matrix(matrix, inverse), &inverse);
     clear(&matrix);
-    cout << "----------------------\n";
+
     return 0;
 }
