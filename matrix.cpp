@@ -72,13 +72,13 @@ namespace Mtrx {
 
     void print(int status, Matrix *matrix) {
         switch (status) {
-            case 0:
+            case 1:
                 print(matrix);
                 break;
-            case 1:
+            case -1:
                 std::cout << "Matrix is not square \n";
                 break;
-            case 2:
+            case 0:
                 std::cout << "Matrix's determinant is null \n";
                 break;
         }
@@ -166,7 +166,7 @@ namespace Mtrx {
         Matrix matrix = copy(&matrix_original);
 
         if ( matrix.rows != matrix.cols) {
-            return 1;
+            return -1;
         }
 
         inverse = create_identity(matrix.rows, matrix.cols);
@@ -174,11 +174,11 @@ namespace Mtrx {
 
         for (int i = 0; i < matrix.cols; ++i) {
             if(matrix.matrix[i][i] == 0) {
-                return 2;
+                return 0;
             }
             multiply_row(&inverse, i, 1 / matrix.matrix[i][i]);
         }
 
-        return 0;
+        return 1;
     }
 }
