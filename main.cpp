@@ -12,7 +12,8 @@ int main() {
 
     matrix = create("./inputs/input_0.txt");
     print(&matrix);
-    print(inverse_matrix(matrix, inverse), &inverse);
+    int status = inverse_matrix(matrix, inverse);
+    print(status, &inverse);
     clear(&matrix);
     cout << "----------------------\n";
 
