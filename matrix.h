@@ -2,29 +2,90 @@
 #define CPP_MATRIX_H
 namespace Mtrx {
     struct Matrix {
-        double **matrix;
+        /*! Количество строк */
         int rows;
+        /*! Количество столбцов */
         int cols;
+        /*! Матрица */
+        double **matrix;
+
+        /*!
+         * @brief Считывание матрицы из файла
+         * @param[in] path - путь до файла
+         */
+        void create(std::string path);
+
+        /*!
+         * @brief Инвертирование матрицы и ее передача через переменную inverse
+         * @param[out] inverse переменная для инвертированной матрицы
+         * @return статус выполнения функции (0 - определитель равен нулю, -1 - матрица неквадратная, 1 - успех)
+         */
+        int inverse_matrix(Matrix &inverse);
+
+        /*!
+         * @brief Печать матрицы в консоль или вывод сообщения об ошибке
+         * @param status[in]
+         */
+        void print(int status);
+
+        /*!
+         * @brief Очистка памяти от динамической матрицы
+         */
+        void clear();
     };
 
-    Matrix create(std::string path);
+    /*!
+     * @bried Создаение пустой матрицы с заданным размером
+     * @param rows[in]
+     * @param cols[in]
+     * @return
+     */
+    Matrix create_empty(int rows, int cols);
 
-    Matrix create(int rows, int cols);
-
+    /*!
+     * @brief Создание единичной матрицы с заданным размером
+     * @param rows[in]
+     * @param cols[in]
+     * @return
+     */
     Matrix create_identity(int rows, int cols);
 
-    void print(Matrix *matrix);
+    /*!
+     * @brief Копирование матрицы
+     * @param matrix[in] - указатель на матрицу для копирования
+     * @return копия матрицы
+     */
+    Matrix copy(Matrix *matrix);
 
-    void print(int status, Matrix *matrix);
+    /*!
+     * @brief Вывод матрицы в консоль
+     * @param matrix[in]
+     */
+    void print_console(Matrix *matrix);
 
-    void clear(Matrix *matrix);
+    /*!
+     * @brief Умножение строки матрицы на число
+     * @param matrix[in]
+     * @param row[in] номер строки
+     * @param num[in] число для умножения
+     */
+    void multiply_row(Matrix *matrix, int row, double num);
 
-    void multiply_row(Matrix* matrix, int row, double num);
+    /*!
+     * @brief Функция для очистки столбца - под выбранным элементом все элементы матрицы будут равны нулю
+     * @param matrix[in] основная матрица
+     * @param inverse[in] матрица для инвертирования
+     * @param row[in] номер строки элемента
+     * @param col[in] номер столбца элемента
+     * @param isDown[in] true - очишать столбце под элементом, false - над элементом
+     */
+    void clear_col(Matrix *matrix, Matrix *inverse, int row, int col, bool isDown);
 
-    void clear_col(Matrix *matrix, Matrix *inverse, int row, int col, bool isDpwn);
-
+    /*!
+     * @brief Очистка всех строк матрицы по главной диагонали
+     * @param matrix[in]
+     * @param inverse[in]
+     */
     void clear_diagonal(Matrix *matrix, Matrix *inverse);
-
-    int inverse_matrix(Matrix &matrix_original, Matrix &inverse);
 }
 #endif //CPP_MATRIX_H

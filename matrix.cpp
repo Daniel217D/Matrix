@@ -1,19 +1,18 @@
 #include <iostream>
 #include <fstream>
-#include <iostream>
 #include "matrix.h"
 
 namespace Mtrx {
-    Matrix create(std::string path) {
-        Matrix matrix{};
+    void Matrix::create(std::string path) {
         std::ifstream in(path);
 
         if (!in.is_open()) {
             std::cout << "file isn't found";
-            return matrix;
+            return;
         }
 
-        int temp, count_symbols = 0, count_space = 0;
+        double temp;
+        int count_symbols = 0, count_space = 0;
         char symbol = ' ';
 
         while (!in.eof()) {
@@ -32,21 +31,60 @@ namespace Mtrx {
         in.seekg(0, std::ios::beg);
         in.clear();
 
-        int cols = count_space + 1;//число столбцов на единицу больше числа пробелов
-        int rows = count_symbols / cols;//число строк
+        cols = count_space + 1;//число столбцов на единицу больше числа пробелов
+        rows = count_symbols / cols;//число строк
+        matrix = new double *[rows];
 
-        matrix = create(rows, cols);
-
-        for (int i = 0; i < matrix.rows; ++i) {
-            for (int j = 0; j < matrix.cols; ++j) {
-                in >> matrix.matrix[i][j];
+        for (int i = 0; i < rows; ++i) {
+            matrix[i] = new double[cols];
+            for (int j = 0; j < cols; ++j) {
+                in >> matrix[i][j];
             }
         }
-
-        return matrix;
     }
 
-    Matrix create(int rows, int cols) {
+    int Matrix::inverse_matrix(Matrix &inverse) {
+        Matrix matrix = copy(this);
+
+        if ( matrix.rows != matrix.cols) {
+            return -1;
+        }
+
+        inverse = create_identity(matrix.rows, matrix.cols);
+        clear_diagonal(&matrix, &inverse);
+
+        for (int i = 0; i < matrix.cols; ++i) {
+            if(matrix.matrix[i][i] == 0) {
+                return 0;
+            }
+            multiply_row(&inverse, i, 1 / matrix.matrix[i][i]);
+        }
+
+        return 1;
+    }
+
+    void Matrix::print(int status) {
+        switch (status) {
+            case 1:
+                ::Mtrx::print_console(this);
+                break;
+            case -1:
+                std::cout << "Matrix is not square \n";
+                break;
+            case 0:
+                std::cout << "Matrix's determinant is null \n";
+                break;
+        }
+    }
+
+    void Matrix::clear() {
+        for (int i = 0; i < rows; ++i) {
+            delete[] matrix[i];
+        }
+        delete[] matrix;
+    }
+
+    Matrix create_empty(int rows, int cols) {
         Matrix matrix{};
         matrix.rows = rows;
         matrix.cols = cols;
@@ -59,7 +97,7 @@ namespace Mtrx {
     }
 
     Matrix create_identity(int rows, int cols) {
-        Matrix matrix = create(rows, cols);
+        Matrix matrix = create_empty(rows, cols);
 
         for (int i = 0; i < matrix.cols; ++i) {
             for (int j = 0; j < matrix.rows; ++j) {
@@ -70,21 +108,18 @@ namespace Mtrx {
         return matrix;
     }
 
-    void print(int status, Matrix *matrix) {
-        switch (status) {
-            case 1:
-                print(matrix);
-                break;
-            case -1:
-                std::cout << "Matrix is not square \n";
-                break;
-            case 0:
-                std::cout << "Matrix's determinant is null \n";
-                break;
+    Matrix copy(Matrix *matrix) {
+        Matrix copy = create_empty(matrix->rows, matrix->cols);
+
+        for (int i = 0; i < matrix->rows; ++i) {
+            for (int j = 0; j < matrix->cols; ++j)
+                copy.matrix[i][j] = matrix->matrix[i][j];
         }
+
+        return copy;
     }
 
-    void print(Matrix *matrix) {
+    void print_console(Matrix *matrix) {
         for (int i = 0; i < matrix->rows; ++i) {
             for (int j = 0; j < matrix->cols; ++j) {
                 std::cout << matrix->matrix[i][j] << " ";
@@ -92,28 +127,6 @@ namespace Mtrx {
             std::cout << "\n";
         }
         std::cout << "\n";
-    }
-
-    void clear(Matrix *matrix) {
-        for (int i = 0; i < matrix->rows; ++i)
-            delete[] matrix->matrix[i];
-        delete[] matrix->matrix;
-    }
-
-    Matrix copy(Matrix *matrix) {
-        Matrix copy{};
-        copy.rows = matrix->rows;
-        copy.cols = matrix->cols;
-
-        copy.matrix = new double *[matrix->rows];
-
-        for (int i = 0; i < matrix->rows; ++i) {
-            copy.matrix[i] = new double [matrix->cols];
-            for (int j = 0; j < matrix->cols; ++j)
-                copy.matrix[i][j] = matrix->matrix[i][j];
-        }
-
-        return copy;
     }
 
     void multiply_row(Matrix *matrix, int row, double num) {
@@ -145,7 +158,7 @@ namespace Mtrx {
                 multiply_row(matrix, i, factor);
                 multiply_row(inverse, i, factor);
 
-                for (int j = matrix->cols; j >= 0; --j) {
+                for (int j = matrix->cols - 1; j >= 0; --j) {
                     matrix->matrix[i][j] -= devider * matrix->matrix[row][j];
                     inverse->matrix[i][j] -= devider * inverse->matrix[row][j];
                 }
@@ -160,25 +173,5 @@ namespace Mtrx {
         for (int i = std::min(matrix->cols, matrix->rows) - 1; i > 0; --i) {
             clear_col(matrix, inverse, i, i, false);
         }
-    }
-
-    int inverse_matrix(Matrix &matrix_original, Matrix &inverse) {
-        Matrix matrix = copy(&matrix_original);
-
-        if ( matrix.rows != matrix.cols) {
-            return -1;
-        }
-
-        inverse = create_identity(matrix.rows, matrix.cols);
-        clear_diagonal(&matrix, &inverse);
-
-        for (int i = 0; i < matrix.cols; ++i) {
-            if(matrix.matrix[i][i] == 0) {
-                return 0;
-            }
-            multiply_row(&inverse, i, 1 / matrix.matrix[i][i]);
-        }
-
-        return 1;
     }
 }
