@@ -44,6 +44,8 @@ namespace Mtrx {
     }
 
     int Matrix::inverse_matrix(Matrix &inverse) {
+        int status;
+
         Matrix matrix = copy(this);
 
         if ( matrix.rows != matrix.cols) {
@@ -51,7 +53,10 @@ namespace Mtrx {
         }
 
         inverse = create_identity(matrix.rows, matrix.cols);
-        clear_diagonal(&matrix, &inverse);
+        status = clear_diagonal(&matrix, &inverse);
+        if(status != 1) {
+            return status;
+        }
 
         for (int i = 0; i < matrix.cols; ++i) {
             if(matrix.matrix[i][i] == 0) {
@@ -135,11 +140,16 @@ namespace Mtrx {
         }
     }
 
-    void clear_col(Matrix *matrix, Matrix *inverse, int row, int col, bool isDown) {
+    int clear_col(Matrix *matrix, Matrix *inverse, int row, int col, bool isDown) {
         double factor = matrix->matrix[row][col];
 
-        if (factor == 0)
-            return;
+        if (factor == 0) {
+            int status = fix_zero_diagonal(matrix, inverse, row, col);
+            if(status != 1)
+                return status;
+        }
+
+        factor = matrix->matrix[row][col];
 
         if (isDown) {
             for (int i = row + 1; i < matrix->rows; ++i) {
@@ -164,14 +174,45 @@ namespace Mtrx {
                 }
             }
         }
+
+        return 1;
     }
 
-    void clear_diagonal(Matrix *matrix, Matrix *inverse) {
+    int clear_diagonal(Matrix *matrix, Matrix *inverse) {
+        int status;
         for (int i = 0; i < std::min(matrix->cols, matrix->rows) - 1; ++i) {
-            clear_col(matrix, inverse, i, i, true);
+            status = clear_col(matrix, inverse, i, i, true);
+            if(status != 1) {
+                return status;
+            }
         }
         for (int i = std::min(matrix->cols, matrix->rows) - 1; i > 0; --i) {
-            clear_col(matrix, inverse, i, i, false);
+            status = clear_col(matrix, inverse, i, i, false);
+            if(status != 1) {
+                return status;
+            }
         }
+        return 1;
+    }
+
+    int fix_zero_diagonal(Matrix *matrix, Matrix *inverse, int row, int col) {
+        int row_not_zero = -1;
+
+        for (int i = 0; i < matrix->rows && row_not_zero == -1; ++i) {
+            if(matrix->matrix[i][col] != 0) {
+                row_not_zero = i;
+            }
+        }
+
+        if(row_not_zero == -1) {
+            return 0;
+        }
+
+        for (int i = 0; i < matrix->cols; ++i) {
+            matrix->matrix[row][i] += matrix->matrix[row_not_zero][i];
+            inverse->matrix[row][i] += inverse->matrix[row_not_zero][i];
+        }
+
+        return 1;
     }
 }

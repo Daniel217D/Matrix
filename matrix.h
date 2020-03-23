@@ -78,14 +78,25 @@ namespace Mtrx {
      * @param row[in] номер строки элемента
      * @param col[in] номер столбца элемента
      * @param isDown[in] true - очишать столбце под элементом, false - над элементом
+     * @return статус
      */
-    void clear_col(Matrix *matrix, Matrix *inverse, int row, int col, bool isDown);
+    int clear_col(Matrix *matrix, Matrix *inverse, int row, int col, bool isDown);
 
     /*!
      * @brief Очистка всех строк матрицы по главной диагонали
      * @param matrix[in]
      * @param inverse[in]
+     * @return статус
      */
-    void clear_diagonal(Matrix *matrix, Matrix *inverse);
+    int clear_diagonal(Matrix *matrix, Matrix *inverse);
+    /*!
+     * @brief Сложение строки с нулевым диагональным элементом с другой строки для замены нулевого элемента на ненулевой
+     * @param matrix[in/out]
+     * @param inverse[out]
+     * @param row[in] строка с нулевым диагональным элементом
+     * @param col[in] столбец с нулевым диагональным элементом
+     * @return статус
+     */
+    int fix_zero_diagonal(Matrix *matrix, Matrix *inverse, int row, int col);
 }
 #endif //CPP_MATRIX_H
