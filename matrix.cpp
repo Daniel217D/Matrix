@@ -68,25 +68,29 @@ namespace Mtrx {
         return 1;
     }
 
-    void Matrix::print(int status) {
-        switch (status) {
-            case 1:
-                ::Mtrx::print_console(this);
-                break;
-            case -1:
-                std::cout << "Matrix is not square \n";
-                break;
-            case 0:
-                std::cout << "Matrix's determinant is null \n";
-                break;
+    void Matrix::print_file(std::string path) {
+        std::ofstream fout;
+        fout.open(path);
+        for (int i = 0; i < rows; ++i) {
+            for (int j = 0; j < cols; ++j) {
+                fout  << matrix[i][j] << " ";
+            }
+            fout  << "\n";
         }
+        fout.close();
     }
 
     void Matrix::clear() {
+        if(cols == 0 && rows == 0)
+            return;
+
         for (int i = 0; i < rows; ++i) {
             delete[] matrix[i];
         }
         delete[] matrix;
+
+        rows = 0;
+        cols = 0;
     }
 
     Matrix create_empty(int rows, int cols) {
@@ -132,6 +136,20 @@ namespace Mtrx {
             std::cout << "\n";
         }
         std::cout << "\n";
+    }
+
+    void status(int status) {
+        switch (status) {
+            case 1:
+                std::cout << "No errors \n";
+                break;
+            case -1:
+                std::cout << "Matrix is not square \n";
+                break;
+            case 0:
+                std::cout << "Matrix's determinant is null \n";
+                break;
+        }
     }
 
     void multiply_row(Matrix *matrix, int row, double num) {

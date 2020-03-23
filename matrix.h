@@ -23,13 +23,13 @@ namespace Mtrx {
         int inverse_matrix(Matrix &inverse);
 
         /*!
-         * @brief Печать матрицы в консоль или вывод сообщения об ошибке
-         * @param status[in]
+         * @brief Вывод матрицы в файл
+         * @param path
          */
-        void print(int status);
+        void print_file(std::string path);
 
         /*!
-         * @brief Очистка памяти от динамической матрицы
+         * @brief Очистка памяти от динамической матрицы, cols и rows присваивается 0
          */
         void clear();
     };
@@ -64,6 +64,12 @@ namespace Mtrx {
     void print_console(Matrix *matrix);
 
     /*!
+     * @brief Печать матрицы в консоль или вывод сообщения об ошибке
+     * @param status[in]
+     */
+    void status(int status);
+
+    /*!
      * @brief Умножение строки матрицы на число
      * @param matrix[in]
      * @param row[in] номер строки
@@ -89,6 +95,7 @@ namespace Mtrx {
      * @return статус
      */
     int clear_diagonal(Matrix *matrix, Matrix *inverse);
+
     /*!
      * @brief Сложение строки с нулевым диагональным элементом с другой строки для замены нулевого элемента на ненулевой
      * @param matrix[in/out]
