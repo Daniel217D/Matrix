@@ -8,71 +8,92 @@ using namespace Mtrx;
 
 
 int main() {
-    Matrix matrix{}, inverse{};
-    int status;
+    Matrix matrix{}; //Переменная для основной матрицы
+    Matrix inverse{}; //Переменная для обратной матрицы
+    int st; //Переменная для статуса инвертирования
 
-    matrix.create("./inputs/input_0.txt");
-    matrix.print(1);
+    matrix.create("./inputs/input_0.txt"); // Считывание матрицы из файла
+    print_console(&matrix); //Вывод матрицы из файла в консоль
 
-    status = matrix.inverse_matrix(inverse);
-    inverse.print(status);
+    //На основе считанной матрицы, создается обратная матрица.
+    //Она помещается в переменную inverse, а результатом функции является статус инвертирования
+    st = matrix.inverse_matrix(inverse);
 
-    matrix.clear();
-    if(status != 1) {
-        inverse.clear();
+    status(st); //Расшифровка и вывод статуса в консоль
+    if(st == 1) { //Если инвертирование успешно...
+        inverse.print_file("./outputs/output_0.txt"); //Вывод обратной матрицы в файл
+        print_console(&inverse); //Печать обратной матрицы в консоль
     }
+
+    //Очистка выделенной памяти
+    matrix.clear();
+    inverse.clear();
 
     cout << "----------------------\n";
 
     matrix.create("./inputs/input_1.txt");
-    matrix.print(1);
+    print_console(&matrix);
 
-    status = matrix.inverse_matrix(inverse);
-    inverse.print(status);
+    st = matrix.inverse_matrix(inverse);
 
-    matrix.clear();
-    if(status != 1) {
-        inverse.clear();
+    status(st);
+    if(st == 1) {
+        inverse.print_file("./outputs/output_1.txt");
+        print_console(&inverse);
     }
 
+    matrix.clear();
+    inverse.clear();
+
     cout << "----------------------\n";
+
 
     matrix.create("./inputs/input_2.txt");
-    matrix.print(1);
+    print_console(&matrix);
 
-    status = matrix.inverse_matrix(inverse);
-    inverse.print(status);
+    st = matrix.inverse_matrix(inverse);
+
+    status(st);
+    if(st == 1) {
+        inverse.print_file("./outputs/output_2.txt");
+        print_console(&inverse);
+    }
 
     matrix.clear();
-    if(status != 1) {
-        inverse.clear();
-    }
+    inverse.clear();
 
     cout << "----------------------\n";
 
-    matrix.create("./inputs/input_3.txt");
-    matrix.print(1);
 
-    status = matrix.inverse_matrix(inverse);
-    inverse.print(status);
+    matrix.create("./inputs/input_3.txt");
+    print_console(&matrix);
+
+    st = matrix.inverse_matrix(inverse);
+
+    status(st);
+    if(st == 1) {
+        inverse.print_file("./outputs/output_3.txt");
+        print_console(&inverse);
+    }
 
     matrix.clear();
-    if(status != 1) {
-        inverse.clear();
-    }
+    inverse.clear();
 
     cout << "----------------------\n";
 
     matrix.create("./inputs/input_hard.txt");
-    matrix.print(1);
+    print_console(&matrix);
 
-    status = matrix.inverse_matrix(inverse);
-    inverse.print(status);
+    st = matrix.inverse_matrix(inverse);
+
+    status(st);
+    if(st == 1) {
+        inverse.print_file("./outputs/output_hard.txt");
+        print_console(&inverse);
+    }
 
     matrix.clear();
-    if(status != 1) {
-        inverse.clear();
-    }
+    inverse.clear();
 
     cout << "----------------------\n";
 
