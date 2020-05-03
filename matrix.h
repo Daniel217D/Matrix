@@ -2,31 +2,46 @@
 #define CPP_MATRIX_H
 namespace Mtrx {
     struct Matrix {
+    private:
         /*! Количество строк */
         int rows;
         /*! Количество столбцов */
         int cols;
         /*! Матрица */
         double **matrix;
+    public:
+        int getRows();
+
+        int getCols();
+
+        double getEl(int row, int col);
+
+        void setEl(int row, int col, double val);
+
+        Matrix();
+
+        Matrix(int rows, int cols);
+
+        explicit Matrix(const std::string& path);
 
         /*!
          * @brief Считывание матрицы из файла
          * @param[in] path - путь до файла
          */
-        void create(std::string path);
+        void read(const std::string& path);
 
         /*!
          * @brief Инвертирование матрицы и ее передача через переменную inverse
          * @param[out] inverse переменная для инвертированной матрицы
          * @return статус выполнения функции (0 - определитель равен нулю, -1 - матрица неквадратная, 1 - успех)
          */
-        int inverse(Matrix &inverse);
+        int inverse(Matrix *&inverse);
 
         /*!
          * @brief Вывод матрицы в файл
          * @param path
          */
-        void print_file(std::string path);
+        void print_file(const std::string& path);
 
         /*!
          * @brief Очистка памяти от динамической матрицы, cols и rows присваивается 0
@@ -40,7 +55,7 @@ namespace Mtrx {
      * @param cols[in]
      * @return
      */
-    Matrix create_empty(int rows, int cols);
+//    Matrix create_empty(int rows, int cols);
 
     /*!
      * @brief Создание единичной матрицы с заданным размером
@@ -48,14 +63,14 @@ namespace Mtrx {
      * @param cols[in]
      * @return
      */
-    Matrix create_identity(int rows, int cols);
+    Matrix *create_identity(int rows, int cols);
 
     /*!
      * @brief Копирование матрицы
      * @param matrix[in] - указатель на матрицу для копирования
      * @return копия матрицы
      */
-    Matrix copy(Matrix *matrix);
+    Matrix *copy(Matrix *matrix);
 
     /*!
      * @brief Вывод матрицы в консоль
