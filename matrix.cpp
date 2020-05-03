@@ -34,6 +34,10 @@ namespace Mtrx {
         read(path);
     }
 
+    Matrix::~Matrix() {
+        clear();
+    }
+
     void Matrix::read(const std::string &path) {
         std::ifstream in(path);
 

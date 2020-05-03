@@ -24,6 +24,8 @@ namespace Mtrx {
 
         explicit Matrix(const std::string& path);
 
+        ~Matrix();
+
         /*!
          * @brief Считывание матрицы из файла
          * @param[in] path - путь до файла

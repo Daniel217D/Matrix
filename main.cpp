@@ -30,6 +30,9 @@ int main() {
     //Очистка выделенной памяти
     matrix->clear();
     inverse->clear();
+    //Возможно удаление через оператор delete
+    //delete matrix;
+    //delete inverse;
 
     //file 1
 
@@ -88,8 +91,8 @@ int main() {
         status(st);
     }
 
-    matrix->clear();
-    inverse->clear();
+    delete matrix;
+    delete inverse;
 
     return 0;
 }
