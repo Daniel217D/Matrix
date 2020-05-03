@@ -5,3 +5,5 @@ project(cpp)
 set(CMAKE_CXX_STANDARD 14)
 
 add_executable(cpp main.cpp matrix.cpp matrix.h)
+# tests
+# add_executable(cpp tests.cpp matrix.cpp matrix.h)
