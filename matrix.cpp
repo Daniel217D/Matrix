@@ -80,7 +80,7 @@ namespace Mtrx {
         }
     }
 
-    int Matrix::inverse(Matrix *&inverse) { // ToDo fix memory leak
+    int Matrix::inverse(Matrix *&inverse) {
         int status;
 
         Matrix *matrix_copy = copy(this);
@@ -88,6 +88,8 @@ namespace Mtrx {
         if (matrix_copy->getRows() != matrix_copy->getCols()) {
             return -1;
         }
+
+        inverse->clear();
 
         inverse = create_identity(matrix_copy->getRows(), matrix_copy->getCols());
         status = clear_diagonal(matrix_copy, inverse);
