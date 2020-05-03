@@ -43,7 +43,7 @@ namespace Mtrx {
         }
     }
 
-    int Matrix::inverse_matrix(Matrix &inverse) {
+    int Matrix::inverse(Matrix &inverse) {
         int status;
 
         Matrix matrix = copy(this);

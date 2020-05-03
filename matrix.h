@@ -20,7 +20,7 @@ namespace Mtrx {
          * @param[out] inverse переменная для инвертированной матрицы
          * @return статус выполнения функции (0 - определитель равен нулю, -1 - матрица неквадратная, 1 - успех)
          */
-        int inverse_matrix(Matrix &inverse);
+        int inverse(Matrix &inverse);
 
         /*!
          * @brief Вывод матрицы в файл

@@ -17,7 +17,7 @@ int main() {
 
     //На основе считанной матрицы, создается обратная матрица.
     //Она помещается в переменную inverse, а результатом функции является статус инвертирования
-    st = matrix.inverse_matrix(inverse);
+    st = matrix.inverse(inverse);
 
 
     if(st == 1) { //Если инвертирование успешно...
@@ -36,7 +36,7 @@ int main() {
     matrix.create("./inputs/input_1.txt");
     print_console(&matrix);
 
-    st = matrix.inverse_matrix(inverse);
+    st = matrix.inverse(inverse);
 
     status(st);
     if(st == 1) {
@@ -53,7 +53,7 @@ int main() {
     matrix.create("./inputs/input_2.txt");
     print_console(&matrix);
 
-    st = matrix.inverse_matrix(inverse);
+    st = matrix.inverse(inverse);
 
     status(st);
     if(st == 1) {
@@ -70,7 +70,7 @@ int main() {
     matrix.create("./inputs/input_3.txt");
     print_console(&matrix);
 
-    st = matrix.inverse_matrix(inverse);
+    st = matrix.inverse(inverse);
 
     status(st);
     if(st == 1) {
@@ -86,7 +86,7 @@ int main() {
     matrix.create("./inputs/input_hard.txt");
     print_console(&matrix);
 
-    st = matrix.inverse_matrix(inverse);
+    st = matrix.inverse(inverse);
 
     status(st);
     if(st == 1) {
