@@ -166,7 +166,7 @@ namespace Mtrx {
     }
 
     void status(int status) {
-        switch (status) { // ToDo default path
+        switch (status) {
             case 1:
                 std::cout << "No errors \n";
                 break;
@@ -176,6 +176,8 @@ namespace Mtrx {
             case 0:
                 std::cout << "Matrix's determinant is null \n";
                 break;
+            default:
+                std:: cout << "Unknown status \n";
         }
     }
 
