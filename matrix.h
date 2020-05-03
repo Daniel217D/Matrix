@@ -10,20 +10,52 @@ namespace Mtrx {
         /*! Матрица */
         double **matrix;
     public:
+        /*!
+         * @return rows
+         */
         int getRows();
 
+        /*!
+         * @return cols
+         */
         int getCols();
 
+        /*!
+         * @param[in] row
+         * @param[in] col
+         * @return matrix cell
+         */
         double getEl(int row, int col);
 
+        /*!
+         * @brief устанавливает значение в ячейке матрицы
+         * @param[in] row
+         * @param[in] col
+         * @param[in] val
+         */
         void setEl(int row, int col, double val);
 
+        /*!
+         * @brief Конструктор для нулевой матрицы
+         */
         Matrix();
 
+        /*!
+         * @brief Конструктор для пустой матрицы
+         * @param[in] rows
+         * @param[in] cols
+         */
         Matrix(int rows, int cols);
 
+        /*!
+         * @brief Конструктор, считывающий матрицу из файла
+         * @param[in] path - путь до файла
+         */
         explicit Matrix(const std::string& path);
 
+        /*!
+         * @brief Деструктор - вызывет метод clear
+         */
         ~Matrix();
 
         /*!
@@ -50,14 +82,6 @@ namespace Mtrx {
          */
         void clear();
     };
-
-    /*!
-     * @bried Создаение пустой матрицы с заданным размером
-     * @param rows[in]
-     * @param cols[in]
-     * @return
-     */
-//    Matrix create_empty(int rows, int cols);
 
     /*!
      * @brief Создание единичной матрицы с заданным размером
