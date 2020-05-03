@@ -46,7 +46,7 @@ TEST_CASE("Matrix::create", "[Matrix]") {
         REQUIRE(matrix->getCols() == 5);
         REQUIRE(matrix->getRows() == 5);
     }
-    matrix->clear();
+    delete matrix;
 }
 
 TEST_CASE("Matrix::inverse", "[Matrix]") {
@@ -74,6 +74,9 @@ TEST_CASE("Matrix::inverse", "[Matrix]") {
         }
 
         REQUIRE(noError);
+
+        delete matrix;
+        delete inverse;
     }
 
     SECTION("input_1.txt") {
@@ -90,6 +93,9 @@ TEST_CASE("Matrix::inverse", "[Matrix]") {
         int status = matrix->inverse(inverse);
 
         REQUIRE(status == 0);
+
+        delete matrix;
+        delete inverse;
     }
 
     SECTION("input_3.txt") {
@@ -98,6 +104,9 @@ TEST_CASE("Matrix::inverse", "[Matrix]") {
         int status = matrix->inverse(inverse);
 
         REQUIRE(status == 0);
+
+        delete matrix;
+        delete inverse;
     }
 
     SECTION("input_hard.txt") {
@@ -126,5 +135,8 @@ TEST_CASE("Matrix::inverse", "[Matrix]") {
         }
 
         REQUIRE(noError);
+
+        delete matrix;
+        delete inverse;
     }
 }
