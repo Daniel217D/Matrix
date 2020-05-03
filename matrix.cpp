@@ -105,7 +105,7 @@ namespace Mtrx {
         std::ofstream fout;
         fout.open(path);
         for (int i = 0; i < getRows(); ++i) {
-            for (int j = 0; j < cols; ++j) {
+            for (int j = 0; j < getCols(); ++j) {
                 fout << matrix[i][j] << " ";
             }
             fout << "\n";
@@ -114,7 +114,7 @@ namespace Mtrx {
     }
 
     void Matrix::clear() {
-        if (cols == 0 && getRows() == 0)
+        if (getCols() == 0 && getRows() == 0)
             return;
 
         for (int i = 0; i < getRows(); ++i) {
